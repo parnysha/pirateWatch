@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Кинопоиск by parnysha</title>
+    <style>
+        #name{
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+<p>
+    Введи название фильма и будет счастье :)
+</p>
+<input id="name"/>
+<form id="searc_film" onsubmit="postNew(); return false;">
+    <p>
+        <label>&nbsp;</label>
+        <input type="submit" value="Поиск" name="button" />
+    </p>
+</form>
+</body>
+<script>
+    function createPlayer({ idVideo}) {
+        window.location.href = '/search/'+idVideo;
+    }
+    async function postNew() {
+        const name = document.getElementById("name");
+        const body = {
+            name: ""+name.value,
+            id:"",
+        };
+        await post(body, createPlayer);
+    }
+    async function post(body, resolve) {
+        await fetch(`/id`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify(body),
+        })
+            .then(async (response) => {
+                const data = await response.json();
+                if (response.ok) {
+                    resolve(data);
+                } else {
+                    throw new Error(data.error || "Возникла неполадка..");
+                }
+            })
+            .catch(async (e) => {
+                reject();
+                alert(e.message);
+            });
+    }
+</script>
+</html>

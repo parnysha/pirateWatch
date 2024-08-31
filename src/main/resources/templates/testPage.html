@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваш фильм</title>
+    <style>
+        .kinobox_player{
+            width: 80%;
+            height: 75%;
+            margin-left: 10%;
+        }
+    </style>
+</head>
+<body>
+<div class="kinobox_player"></div>
+<script src="https://kinobox.tv/kinobox.min.js"></script>
+<script th:inline="javascript">
+    var htmlVariable = '[(${id})]'
+    kbox('.kinobox_player', {search: {kinopoisk: htmlVariable}})
+</script>
+<form action="/">
+    <button>Вернуться на главную</button>
+</form>
+</body>
+</html>
