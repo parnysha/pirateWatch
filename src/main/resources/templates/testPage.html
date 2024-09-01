@@ -3,23 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <title>Ваш фильм</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" href="../logotip.png">
     <style>
+        body, html {
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+        }
+        /* CSS for header */
+        header{
+            width: 100%;
+            height: 5%;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #302f49;
+        }
+
+        .header .logo {
+            font-size: 25px;
+            font-family: "Sriracha", cursive;
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+        }
+        /*css for player*/
+        main{
+            width: 100%;
+            height: 90%;
+            background-image: url("../фон.jpg");
+        }
+        .up{
+            width: 100%;
+            height: 10%;
+        }
+        .under{
+            width: 100%;
+            height: 10%;
+        }
+        /*Плеер*/
         .kinobox_player{
-            width: 80%;
-            height: 75%;
-            margin-left: 10%;
+            width: 60%;
+            height: 80%;
+            margin-left: 20%;
+        }
+        /* CSS for footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #302f49;
+            padding: 0px 80px;
+            height: 5%;
+        }
+
+        .footer .copy {
+            color: #a1a1a1;
+        }
+
+        .bottom-links {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .bottom-links .links {
+            display: inline-block;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .bottom-links .links span {
+            font-size: 20px;
+            color: #a1a1a1;
+            text-transform: uppercase;
+            margin: 10px 0;
+        }
+
+        .bottom-links .links a {
+            text-decoration: none;
+            color: #a1a1a1;
+            padding: 10px 20px;
         }
     </style>
 </head>
 <body>
-<div class="kinobox_player"></div>
+<header class="header">
+    <a href="/" class="logo">На главную</a>
+</header>
+<main>
+    <div class="up"></div>
+    <div class="kinobox_player"></div>
+    <div class="under"></div>
+</main>
+<footer class="footer">
+    <div class="copy">© 2024 by Parnysha</div>
+    <div class="bottom-links">
+        <div class="links">
+            <span>Social Links</span>
+            <a href="https://vk.com/trrrrra"><i class="fab fa-vk"></i></a>
+            <a href="https://t.me/add_s_povyazkoy"><i class="fab fa-telegram"></i></a>
+            <a href="https://github.com/parnysha"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
 <script src="https://kinobox.tv/kinobox.min.js"></script>
 <script th:inline="javascript">
     var htmlVariable = '[(${id})]'
     kbox('.kinobox_player', {search: {kinopoisk: htmlVariable}})
 </script>
-<form action="/">
-    <button>Вернуться на главную</button>
-</form>
-</body>
-</html>
