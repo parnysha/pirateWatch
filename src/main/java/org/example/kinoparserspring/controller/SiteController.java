@@ -18,14 +18,12 @@ public class SiteController {
 
     @PostMapping("/id")
     public JsonAns searchFilm(@RequestBody JsonReq name) {
-        return searchService.searchFilmId(name.getName());
+        return searchService.searchFilmId(name.getName().trim().toLowerCase());
     }
     @GetMapping("/search/{idVideo}")
     public ModelAndView filmPage(@PathVariable int idVideo, Model model) {
         model.addAttribute("id", idVideo);
         return new ModelAndView("testPage");
     }
-
-
 
 }
