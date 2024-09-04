@@ -7,28 +7,47 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 
 import java.io.IOException;
-import java.net.http.HttpConnectTimeoutException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Service
 @RequiredArgsConstructor
 public class SearchFilmServiceImpl implements SearchFilmService {
 
     @Override
-    public JsonAns searchFilmId(String name) {
+    public List<JsonAns> searchFilmId(String name) {
+        List<JsonAns> list = new ArrayList<>();
         if(name.matches("[+]?\\d+")){
-            return new JsonAns(name);
+            list.add(new JsonAns(name,name));
+            return list;
         }
-        String elementCifr = "";
         try {
             Document document = Jsoup.connect("https://www.kinopoisk.ru/index.php?kp_query="+name).get();
-            elementCifr = document.getElementsByTag("a").attr("data-id");
+            Elements el = document.select("p.pic");
+            for (Element ele : el){
+                Elements eleee = ele.getElementsByTag("a");
+                String id = eleee.attr("data-id");
+                for (Element ell: eleee){
+                    Elements eld = ell.select("img.flap_img");
+                    for (Element elm: eld){
+                        String names = elm.attr("title");
+                        if(!"".equals(names)){
+                            list.add(new JsonAns(names,id));
+                        }
+                    }
+                }
+            }
+            //elementCifr = document.getElementsByTag("a").attr("data-id");
         } catch (IOException e) {
-            return new JsonAns("");
+            list.add(new JsonAns("",""));
         }
 
-        return new JsonAns(elementCifr);
+        return list;
     }
 }
