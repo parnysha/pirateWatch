@@ -81,7 +81,6 @@
             height: 50px;
             background: white;
             box-sizing: border-box;
-            border-radius: 25px;
             border: 4px solid white;
             padding: 5px;
 
@@ -101,7 +100,7 @@
             outline: 0;
             border: 0;
             font-size: 1em;
-            border-radius: 20px;
+
             padding: 0 20px;
         }
         /*круг вокруг поика*/
@@ -113,20 +112,24 @@
             position: absolute;
             top: 0;
             right: 0;
-            border-radius: 50%;
             color: #07051a;
             text-align: center;
             font-size: 1.2em;
         }
 
-        form:hover{
-            width: 600px;
-            cursor: pointer;
-        }
-
         form:hover .fa{
             background: #07051a;
             color: white;
+        }
+
+        .menu{
+            height: 4%;
+            width: 31%;
+            background-image: linear-gradient(white 95%, black 95%);
+            font-size: 20px;
+            text-decoration: none;
+            user-select: none;
+            color: black !important;
         }
 
         /* CSS for footer */
@@ -175,7 +178,7 @@
 </head>
 <body>
 <main class="main">
-    <div class="intro">
+    <div class="intro" id="poisk">
         <h1>Kinopoisk.free</h1>
         <p>Найдется всё!</p>
         <form onsubmit="postNew(); return false;">
@@ -198,11 +201,27 @@
 </footer>
 </body>
 <script>
-    function createPlayer({ idVideo}) {
-        if(idVideo===""){
-            alert("Не удалось найти текущий фильм, скопируйте название, либо цифры из URL с кинопоиска и попробуйте еще раз")
+    function createPlayer(jsonAns) {
+        if(jsonAns.length===0){
+            alert("По вашему запросу ничего не найдено")
         } else {
-            window.location.href = '/search/'+idVideo;
+            if (jsonAns.length===1&&jsonAns[0].name===""){
+                alert("Не удалось найти текущий фильм, скопируйте название, либо цифры из URL с кинопоиска и попробуйте еще раз")
+            } else {
+                let parent = document.querySelector('#poisk');
+                while (document.querySelector("#vsplyv")!=null){
+                    const deleteElement = document.querySelector("#vsplyv");
+                    deleteElement.remove();
+                }
+                for (let i = 0; i < jsonAns.length; i++) {
+                    ssylka = document.createElement("a");
+                    ssylka.href="/search/"+jsonAns[i].idVideo;
+                    ssylka.className="menu";
+                    ssylka.id="vsplyv";
+                    ssylka.textContent=jsonAns[i].name;
+                    parent.appendChild(ssylka);
+                }
+            }
         }
     }
     async function postNew() {
