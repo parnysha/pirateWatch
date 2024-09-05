@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class JsonAns {
-
+    private String name;
     private String idVideo;
 }

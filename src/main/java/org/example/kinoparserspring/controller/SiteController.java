@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +20,7 @@ public class SiteController {
     private final SearchFilmService searchService;
 
     @PostMapping("/id")
-    public JsonAns searchFilm(@RequestBody JsonReq name) {
+    public List<JsonAns> searchFilm(@RequestBody JsonReq name){
         return searchService.searchFilmId(name.getName().trim().toLowerCase());
     }
     @GetMapping("/search/{idVideo}")
@@ -25,5 +28,4 @@ public class SiteController {
         model.addAttribute("id", idVideo);
         return new ModelAndView("testPage");
     }
-
 }
